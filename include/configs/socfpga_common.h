@@ -163,21 +163,21 @@
  * I2C support
  */
 #define CONFIG_SYS_I2C
-#define CONFIG_SYS_I2C_BUS_MAX		4
-#define CONFIG_SYS_I2C_BASE		SOCFPGA_I2C0_ADDRESS
-#define CONFIG_SYS_I2C_BASE1		SOCFPGA_I2C1_ADDRESS
-#define CONFIG_SYS_I2C_BASE2		SOCFPGA_I2C2_ADDRESS
-#define CONFIG_SYS_I2C_BASE3		SOCFPGA_I2C3_ADDRESS
+#define CONFIG_SYS_I2C_BUS_MAX        4
+#define CONFIG_SYS_I2C_BASE        SOCFPGA_I2C0_ADDRESS
+#define CONFIG_SYS_I2C_BASE1        SOCFPGA_I2C1_ADDRESS
+#define CONFIG_SYS_I2C_BASE2        SOCFPGA_I2C2_ADDRESS
+#define CONFIG_SYS_I2C_BASE3        SOCFPGA_I2C3_ADDRESS
 /* Using standard mode which the speed up to 100Kb/s */
-#define CONFIG_SYS_I2C_SPEED		100000
-#define CONFIG_SYS_I2C_SPEED1		100000
-#define CONFIG_SYS_I2C_SPEED2		100000
-#define CONFIG_SYS_I2C_SPEED3		100000
+#define CONFIG_SYS_I2C_SPEED        100000
+#define CONFIG_SYS_I2C_SPEED1        100000
+#define CONFIG_SYS_I2C_SPEED2        100000
+#define CONFIG_SYS_I2C_SPEED3        100000
 /* Address of device when used as slave */
-#define CONFIG_SYS_I2C_SLAVE		0x02
-#define CONFIG_SYS_I2C_SLAVE1		0x02
-#define CONFIG_SYS_I2C_SLAVE2		0x02
-#define CONFIG_SYS_I2C_SLAVE3		0x02
+#define CONFIG_SYS_I2C_SLAVE        0x02
+#define CONFIG_SYS_I2C_SLAVE1        0x02
+#define CONFIG_SYS_I2C_SLAVE2        0x02
+#define CONFIG_SYS_I2C_SLAVE3        0x02
 #ifndef __ASSEMBLY__
 
 /* Clock supplied to I2C controller in unit of MHz */
@@ -194,14 +194,16 @@ unsigned int cm_get_l4_sp_clk_hz(void);
 #define CONFIG_CMD_MTDPARTS
 #define CONFIG_MTD_DEVICE
 #define CONFIG_MTD_PARTITIONS
-#define MTDIDS_DEFAULT			"nor0=ff705000.spi.0"
+#define MTDIDS_DEFAULT            "nor0=ff705000.spi.0"
 #endif
 /* QSPI reference clock */
 #ifndef __ASSEMBLY__
+
 unsigned int cm_get_qspi_controller_clk_hz(void);
-#define CONFIG_CQSPI_REF_CLK		cm_get_qspi_controller_clk_hz()
+
+#define CONFIG_CQSPI_REF_CLK        cm_get_qspi_controller_clk_hz()
 #endif
-#define CONFIG_CQSPI_DECODER		0
+#define CONFIG_CQSPI_DECODER        0
 #define CONFIG_BOUNCE_BUFFER
 
 /*
@@ -235,10 +237,10 @@ unsigned int cm_get_qspi_controller_clk_hz(void);
 #define CONFIG_USB_FUNCTION_MASS_STORAGE
 
 #define CONFIG_SYS_DFU_DATA_BUF_SIZE	(32 * 1024 * 1024)
-#define DFU_DEFAULT_POLL_TIMEOUT	300
+#define DFU_DEFAULT_POLL_TIMEOUT		300
 
 /* USB IDs */
-#define CONFIG_G_DNL_UMS_VENDOR_NUM	0x0525
+#define CONFIG_G_DNL_UMS_VENDOR_NUM		0x0525
 #define CONFIG_G_DNL_UMS_PRODUCT_NUM	0xA4A5
 #endif
 
@@ -246,19 +248,19 @@ unsigned int cm_get_qspi_controller_clk_hz(void);
  * U-Boot environment
  */
 #if !defined(CONFIG_ENV_SIZE)
-#define CONFIG_ENV_SIZE            4096
+#define CONFIG_ENV_SIZE            		(4*1024)
 #endif
 
 /* Environment for SDMMC boot */
 #if defined(CONFIG_ENV_IS_IN_MMC) && !defined(CONFIG_ENV_OFFSET)
-#define CONFIG_SYS_MMC_ENV_DEV		0	/* device 0 */
-#define CONFIG_ENV_OFFSET		512	/* just after the MBR */
+#define CONFIG_SYS_MMC_ENV_DEV			0	/* device 0 */
+#define CONFIG_ENV_OFFSET				512	/* just after the MBR */
 #endif
 
 /* Environment for QSPI boot */
 #if defined(CONFIG_ENV_IS_IN_SPI_FLASH) && !defined(CONFIG_ENV_OFFSET)
-#define CONFIG_ENV_OFFSET		0x00100000
-#define CONFIG_ENV_SECT_SIZE		(64 * 1024)
+#define CONFIG_ENV_OFFSET				0x00100000
+#define CONFIG_ENV_SECT_SIZE			(64 * 1024)
 #endif
 
 /*
@@ -304,7 +306,7 @@ unsigned int cm_get_qspi_controller_clk_hz(void);
  */
 #define CONFIG_SPL_FRAMEWORK
 #define CONFIG_SPL_TEXT_BASE        CONFIG_SYS_INIT_RAM_ADDR
-#define CONFIG_SPL_MAX_SIZE        (64 * 1024)
+#define CONFIG_SPL_MAX_SIZE        	(64 * 1024)
 
 /* SPL SDMMC boot support */
 #ifdef CONFIG_SPL_MMC_SUPPORT
@@ -338,6 +340,7 @@ unsigned int cm_get_qspi_controller_clk_hz(void);
 
 /* Extra Environment */
 #ifndef CONFIG_SPL_BUILD
+
 #include <config_distro_defaults.h>
 
 #ifdef CONFIG_CMD_PXE
@@ -349,23 +352,23 @@ unsigned int cm_get_qspi_controller_clk_hz(void);
 #define BOOT_TARGET_DEVICES(func) \
        func(MMC, mmc, 0) \
        BOOT_TARGET_DEVICES_PXE(func) \
-       func(DHCP, dhcp, na) 
+       func(DHCP, dhcp, na)
 
 #include <config_distro_bootcmd.h>
 
 #ifndef CONFIG_EXTRA_ENV_SETTINGS
 #define CONFIG_EXTRA_ENV_SETTINGS \
-	"verify=n\0" \
-	"bootimage=" CONFIG_BOOTFILE "\0" \
-	"fdt_addr=100\0" \
-	"fdtfile=" CONFIG_DEFAULT_FDT_FILE "\0" \
-	"bootm_size=0xa000000\0" \
-	"kernel_addr_r="__stringify(CONFIG_SYS_LOAD_ADDR)"\0" \
-	"fdt_addr_r=0x02000000\0" \
-	"scriptaddr=0x02100000\0" \
-	"pxefile_addr_r=0x02200000\0" \
-	"ramdisk_addr_r=0x02300000\0" \
-	BOOTENV
+    "verify=n\0" \
+    "bootimage=" CONFIG_BOOTFILE "\0" \
+    "fdt_addr=100\0" \
+    "fdtfile=" CONFIG_DEFAULT_FDT_FILE "\0" \
+    "bootm_size=0xa000000\0" \
+    "kernel_addr_r="__stringify(CONFIG_SYS_LOAD_ADDR)"\0" \
+    "fdt_addr_r=0x02000000\0" \
+    "scriptaddr=0x02100000\0" \
+    "pxefile_addr_r=0x02200000\0" \
+    "ramdisk_addr_r=0x02300000\0" \
+    BOOTENV
 
 #endif
 #endif
