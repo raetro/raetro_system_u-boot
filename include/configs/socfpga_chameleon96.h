@@ -9,7 +9,7 @@
 #include <asm/arch/base_addr_ac5.h>
 
 /* U-Boot Commands */
-#define CONFIG_FAT_WRITE
+#define CONFIG_FS_FAT
 #define CONFIG_HW_WATCHDOG
 
 /* Memory configurations */
