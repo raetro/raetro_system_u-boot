@@ -97,15 +97,10 @@ config TARGET_SOCFPGA_TERASIC_SOCKIT
 	bool "Terasic SoCkit (Cyclone V)"
 	select TARGET_SOCFPGA_CYCLONE5
 
-config TARGET_SOCFPGA_ARROW_CHAMELEON96
-	bool "Arrow Chameleon96 (Cyclone V)"
-	select TARGET_SOCFPGA_CYCLONE5
-
 endchoice
 
 config SYS_BOARD
 	default "arria5-socdk" if TARGET_SOCFPGA_ARRIA5_SOCDK
-	default "chameleon96" if TARGET_SOCFPGA_ARROW_CHAMELEON96
 	default "cyclone5-socdk" if TARGET_SOCFPGA_CYCLONE5_SOCDK
 	default "de0-nano-soc" if TARGET_SOCFPGA_TERASIC_DE0_NANO
 	default "de1-soc" if TARGET_SOCFPGA_TERASIC_DE1_SOC
@@ -136,7 +131,6 @@ config SYS_SOC
 
 config SYS_CONFIG_NAME
 	default "socfpga_arria5_socdk" if TARGET_SOCFPGA_ARRIA5_SOCDK
-	default "socfpga_chameleon96" if TARGET_SOCFPGA_ARROW_CHAMELEON96
 	default "socfpga_cyclone5_socdk" if TARGET_SOCFPGA_CYCLONE5_SOCDK
 	default "socfpga_de0_nano_soc" if TARGET_SOCFPGA_TERASIC_DE0_NANO
 	default "socfpga_de1_soc" if TARGET_SOCFPGA_TERASIC_DE1_SOC

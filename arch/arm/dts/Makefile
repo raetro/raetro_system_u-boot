@@ -152,7 +152,6 @@ dtb-$(CONFIG_ARCH_SOCFPGA) +=				\
 	socfpga_cyclone5_de1_soc.dtb			\
 	socfpga_cyclone5_de10_nano.dtb			\
 	socfpga_cyclone5_sockit.dtb			\
-	socfpga_cyclone5_chameleon96.dtb		\
 	socfpga_cyclone5_socrates.dtb			\
 	socfpga_cyclone5_sr1500.dtb			\
 	socfpga_cyclone5_vining_fpga.dtb

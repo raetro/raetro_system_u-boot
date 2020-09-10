@@ -411,6 +411,7 @@ int arch_early_init_r(void)
 	socfpga_per_reset(SOCFPGA_RESET(NAND), 0);
 #endif
 
+	/* Enable bridges after reset if FPGA is in user mode. */
 	socfpga_bridges_reset(0);
 	return 0;
 }
