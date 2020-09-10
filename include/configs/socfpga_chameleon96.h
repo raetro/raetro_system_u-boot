@@ -18,10 +18,10 @@
 #define PHYS_SDRAM_1_SIZE		0x20000000	/* 500MiB */
 
 /* Booting Linux */
-#define CONFIG_BOOTFILE		"fitImage"
-#define CONFIG_BOOTARGS		"console=ttyS0," __stringify(CONFIG_BAUDRATE) " $v loop.max_part=8"
-#define CONFIG_BOOTCOMMAND	"mw 0xff709004 0x800; run mmcload; run mmcboot"
-#define CONFIG_LOADADDR		0x01000000
+#define CONFIG_BOOTFILE			"/linux/zImage_dtb"
+#define CONFIG_BOOTARGS			"console=ttyS0," __stringify(CONFIG_BAUDRATE) " $v loop.max_part=8"
+#define CONFIG_BOOTCOMMAND		"run usb_reset; mw 0xff709004 0x800; run mmcload; run hdmi_init; run mmcboot"
+#define CONFIG_LOADADDR			0x01000000
 #define CONFIG_SYS_LOAD_ADDR	CONFIG_LOADADDR
 
 /* Ethernet on SoC (EMAC) */
@@ -39,7 +39,7 @@
 /* Extra Environment */
 #define CONFIG_EXTRA_ENV_SETTINGS \
 	"loadaddr=" __stringify(CONFIG_SYS_LOAD_ADDR) "\0" \
-	"bootimage=/linux/zImage_dtb\0" \
+	"bootimage=" CONFIG_BOOTFILE "\0" \
 	"fdt_addr=100\0" \
 	"fpgadata=0x02000000\0" \
 	"core=menu.rbf\0" \
@@ -50,7 +50,28 @@
 	"bootm $loadaddr - $fdt_addr\0" \
 	"mmc_boot=" __stringify(CONFIG_SYS_MMCSD_FS_BOOT_PARTITION) "\0" \
 	"mmcroot=/dev/mmcblk0p" __stringify(CONFIG_SYS_MMCSD_FS_BOOT_PARTITION) "\0" \
-	"v=loglevel=4\0" \
+	"v=loglevel=4\0"                 			\
+	"usb_reset="								\
+		"echo Resetting USB HUB...; "			\
+		"gpio clear porta0; "					\
+		"sleep 1; "								\
+		"gpio set porta0\0"						\
+	\
+	"hdmi_init="								\
+		"echo Initializing HDMI Transmitter for 1080p...; "	\
+		"i2c dev 2; "							\
+		"i2c mw 37 FF.1 02 1; "					\
+		"i2c mw 73 FF.1 00 1; "					\
+		"i2c mw 73 A0.1 06 1; "					\
+		"i2c mw 73 CB.1 00 1; "					\
+		"i2c mw 73 F0.1 00 1; "					\
+		"i2c mw 73 18.1 FF 1; "					\
+		"i2c mw 73 19.1 FF 1; "					\
+		"i2c mw 73 1A.1 FF 1; "					\
+		"i2c mw 73 20.1 45 1; "					\
+		"i2c mw 73 21.1 23 1; "					\
+		"i2c mw 73 22.1 01 1; "					\
+		"i2c mw 73 23.1 20 1\0"					\
 	"mmcboot=setenv bootargs " CONFIG_BOOTARGS " root=$mmcroot loop=linux/linux.img ro rootwait;" "bootz $loadaddr - $fdt_addr\0" \
 	"mmcload=mmc rescan;" \
 		"run fpgacheck;" \
