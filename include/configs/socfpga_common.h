@@ -15,59 +15,62 @@
 
 #define CONFIG_CRC32_VERIFY
 
-#define CONFIG_SYS_BOOTMAPSZ		(64 * 1024 * 1024)
+#define CONFIG_SYS_BOOTMAPSZ        (64 * 1024 * 1024)
 
-#define CONFIG_TIMESTAMP		/* Print image info with timestamp */
+#define CONFIG_TIMESTAMP        /* Print image info with timestamp */
 
 /* add target to build it automatically upon "make" */
-#define CONFIG_BUILD_TARGET		"u-boot-with-spl.sfp"
+#define CONFIG_BUILD_TARGET        "u-boot-with-spl.sfp"
 
 /*
  * Memory configurations
  */
-#define CONFIG_NR_DRAM_BANKS		1
-#define PHYS_SDRAM_1			0x0
-#define CONFIG_SYS_MALLOC_LEN		(64 * 1024 * 1024)
-#define CONFIG_SYS_MEMTEST_START	PHYS_SDRAM_1
-#define CONFIG_SYS_MEMTEST_END		PHYS_SDRAM_1_SIZE
+#define CONFIG_NR_DRAM_BANKS        1
+#define PHYS_SDRAM_1            0x0
+#define CONFIG_SYS_MALLOC_LEN        (64 * 1024 * 1024)
+#define CONFIG_SYS_MEMTEST_START    PHYS_SDRAM_1
+#define CONFIG_SYS_MEMTEST_END        PHYS_SDRAM_1_SIZE
 
-#define CONFIG_SYS_INIT_RAM_ADDR	0xFFFF0000
-#define CONFIG_SYS_INIT_RAM_SIZE	0x10000
-#define CONFIG_SYS_INIT_SP_OFFSET		\
-	(CONFIG_SYS_INIT_RAM_SIZE - GENERATED_GBL_DATA_SIZE)
-#define CONFIG_SYS_INIT_SP_ADDR			\
-	(CONFIG_SYS_INIT_RAM_ADDR + CONFIG_SYS_INIT_SP_OFFSET)
+#define CONFIG_SYS_INIT_RAM_ADDR    0xFFFF0000
+#define CONFIG_SYS_INIT_RAM_SIZE    0x10000
+#define CONFIG_SYS_INIT_SP_OFFSET        \
+    (CONFIG_SYS_INIT_RAM_SIZE - GENERATED_GBL_DATA_SIZE)
+#define CONFIG_SYS_INIT_SP_ADDR            \
+    (CONFIG_SYS_INIT_RAM_ADDR + CONFIG_SYS_INIT_SP_OFFSET)
 
-#define CONFIG_SYS_SDRAM_BASE		PHYS_SDRAM_1
+#define CONFIG_SYS_SDRAM_BASE        PHYS_SDRAM_1
 #ifdef CONFIG_SOCFPGA_VIRTUAL_TARGET
 #define CONFIG_SYS_TEXT_BASE		0x08000040
 #else
-#define CONFIG_SYS_TEXT_BASE		0x01000040
+#define CONFIG_SYS_TEXT_BASE        0x01000040
 #endif
 
 /*
  * U-Boot general configurations
  */
 #define CONFIG_SYS_LONGHELP
-#define CONFIG_SYS_CBSIZE	1024		/* Console I/O buffer size */
-#define CONFIG_SYS_PBSIZE	\
-	(CONFIG_SYS_CBSIZE + sizeof(CONFIG_SYS_PROMPT) + 16)
-						/* Print buffer size */
-#define CONFIG_SYS_MAXARGS	32		/* Max number of command args */
-#define CONFIG_SYS_BARGSIZE	CONFIG_SYS_CBSIZE
-						/* Boot argument buffer size */
-#define CONFIG_AUTO_COMPLETE			/* Command auto complete */
-#define CONFIG_CMDLINE_EDITING			/* Command history etc */
+#define CONFIG_SYS_CBSIZE    1024        /* Console I/O buffer size */
+#define CONFIG_SYS_PBSIZE    \
+    (CONFIG_SYS_CBSIZE + sizeof(CONFIG_SYS_PROMPT) + 16)
+/* Print buffer size */
+#define CONFIG_SYS_MAXARGS    32        /* Max number of command args */
+#define CONFIG_SYS_BARGSIZE    CONFIG_SYS_CBSIZE
+/* Boot argument buffer size */
+#define CONFIG_AUTO_COMPLETE            /* Command auto complete */
+#define CONFIG_CMDLINE_EDITING            /* Command history etc */
 
 #ifndef CONFIG_SYS_HOSTNAME
-#define CONFIG_SYS_HOSTNAME	CONFIG_SYS_BOARD
+#define CONFIG_SYS_HOSTNAME    CONFIG_SYS_BOARD
 #endif
+
+#define CONFIG_CMD_PXE
+#define CONFIG_MENU
 
 /*
  * Cache
  */
 #define CONFIG_SYS_L2_PL310
-#define CONFIG_SYS_PL310_BASE		SOCFPGA_MPUL2_ADDRESS
+#define CONFIG_SYS_PL310_BASE        SOCFPGA_MPUL2_ADDRESS
 
 /*
  * SDRAM controller
@@ -112,13 +115,13 @@
  * L4 OSC1 Timer 0
  */
 /* This timer uses eosc1, whose clock frequency is fixed at any condition. */
-#define CONFIG_SYS_TIMERBASE		SOCFPGA_OSC1TIMER0_ADDRESS
+#define CONFIG_SYS_TIMERBASE        SOCFPGA_OSC1TIMER0_ADDRESS
 #define CONFIG_SYS_TIMER_COUNTS_DOWN
-#define CONFIG_SYS_TIMER_COUNTER	(CONFIG_SYS_TIMERBASE + 0x4)
+#define CONFIG_SYS_TIMER_COUNTER    (CONFIG_SYS_TIMERBASE + 0x4)
 #ifdef CONFIG_SOCFPGA_VIRTUAL_TARGET
 #define CONFIG_SYS_TIMER_RATE		2400000
 #else
-#define CONFIG_SYS_TIMER_RATE		25000000
+#define CONFIG_SYS_TIMER_RATE        25000000
 #endif
 
 /*
@@ -155,23 +158,25 @@
 #endif
 
 #ifndef __ASSEMBLY__
+
 /* Clock supplied to I2C controller in unit of MHz */
 unsigned int cm_get_l4_sp_clk_hz(void);
-#define IC_CLK				(cm_get_l4_sp_clk_hz() / 1000000)
+
+#define IC_CLK                (cm_get_l4_sp_clk_hz() / 1000000)
 #endif
 
 /*
  * Serial Driver
  */
 #define CONFIG_SYS_NS16550_SERIAL
-#define CONFIG_SYS_NS16550_REG_SIZE	-4
-#define CONFIG_SYS_NS16550_COM1		SOCFPGA_UART0_ADDRESS
+#define CONFIG_SYS_NS16550_REG_SIZE    -4
+#define CONFIG_SYS_NS16550_COM1        SOCFPGA_UART0_ADDRESS
 #ifdef CONFIG_SOCFPGA_VIRTUAL_TARGET
 #define CONFIG_SYS_NS16550_CLK		1000000
 #else
-#define CONFIG_SYS_NS16550_CLK		100000000
+#define CONFIG_SYS_NS16550_CLK        100000000
 #endif
-#define CONFIG_CONS_INDEX		1
+#define CONFIG_CONS_INDEX        1
 
 /*
  * USB
@@ -198,7 +203,7 @@ unsigned int cm_get_l4_sp_clk_hz(void);
  * U-Boot environment
  */
 #if !defined(CONFIG_ENV_SIZE)
-#define CONFIG_ENV_SIZE			4096
+#define CONFIG_ENV_SIZE            4096
 #endif
 
 /* Environment for SDMMC boot */
@@ -255,14 +260,18 @@ unsigned int cm_get_l4_sp_clk_hz(void);
  * 0xFFFF_FF00 ...... End of SRAM
  */
 #define CONFIG_SPL_FRAMEWORK
-#define CONFIG_SPL_TEXT_BASE		CONFIG_SYS_INIT_RAM_ADDR
-#define CONFIG_SPL_MAX_SIZE		(64 * 1024)
+#define CONFIG_SPL_TEXT_BASE        CONFIG_SYS_INIT_RAM_ADDR
+#define CONFIG_SPL_MAX_SIZE        (64 * 1024)
 
 /* SPL SDMMC boot support */
 #ifdef CONFIG_SPL_MMC_SUPPORT
 #if defined(CONFIG_SPL_FAT_SUPPORT) || defined(CONFIG_SPL_EXT_SUPPORT)
-#define CONFIG_SYS_MMCSD_FS_BOOT_PARTITION	2
 #define CONFIG_SPL_FS_LOAD_PAYLOAD_NAME		"u-boot-dtb.img"
+#define CONFIG_SYS_MMCSD_FS_BOOT_PARTITION	1
+#endif
+#else
+#ifndef CONFIG_SYS_MMCSD_RAW_MODE_U_BOOT_PARTITION
+#define CONFIG_SYS_MMCSD_RAW_MODE_U_BOOT_PARTITION    1
 #endif
 #endif
 
@@ -282,6 +291,6 @@ unsigned int cm_get_l4_sp_clk_hz(void);
 /*
  * Stack setup
  */
-#define CONFIG_SPL_STACK		CONFIG_SYS_INIT_SP_ADDR
+#define CONFIG_SPL_STACK        CONFIG_SYS_INIT_SP_ADDR
 
-#endif	/* __CONFIG_SOCFPGA_COMMON_H__ */
+#endif    /* __CONFIG_SOCFPGA_COMMON_H__ */

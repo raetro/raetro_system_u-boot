@@ -356,6 +356,7 @@ static uint32_t iswgrp_handoff[8];
 int arch_early_init_r(void)
 {
 	int i;
+	unsigned int csel;
 
 	/*
 	 * Write magic value into magic register to unlock support for
@@ -363,8 +364,18 @@ int arch_early_init_r(void)
 	 * value to be written into the register by the bootloader, so
 	 * to support that old code, we write it here instead of in the
 	 * reset_cpu() function just before resetting the CPU.
+	 *
+	 * For CSEL = 0 we do not want to enable warm resets to ensure that
+	 * on reset the clocks and plls are reset to their default states as
+	 * the bootrom, for CSEL=0, leaves the clocks untouched.  If the clocks
+	 * and plls are not reset, the bootrom will fail to load the spl image.
 	 */
-	writel(0xae9efebc, &sysmgr_regs->romcodegrp_warmramgrp_enable);
+
+	csel = (readl(&sysmgr_regs->bootinfo) & SYSMGR_BOOTINFO_CSEL_MASK) >>
+		SYSMGR_BOOTINFO_CSEL_LSB;
+
+	if (csel)
+		writel(0xae9efebc, &sysmgr_regs->romcodegrp_warmramgrp_enable);
 
 	for (i = 0; i < 8; i++)	/* Cache initial SW setting regs */
 		iswgrp_handoff[i] = readl(&sysmgr_regs->iswgrp_handoff[i]);

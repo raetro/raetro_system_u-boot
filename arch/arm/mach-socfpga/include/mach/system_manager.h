@@ -137,6 +137,9 @@ struct socfpga_system_manager {
 
 #define SYSMGR_SDMMC_DRVSEL_SHIFT	0
 
+#define SYSMGR_BOOTINFO_CSEL_MASK	0x18
+#define SYSMGR_BOOTINFO_CSEL_LSB	3
+
 /* EMAC Group Bit definitions */
 #define SYSMGR_EMACGRP_CTRL_PHYSEL_ENUM_GMII_MII	0x0
 #define SYSMGR_EMACGRP_CTRL_PHYSEL_ENUM_RGMII		0x1
