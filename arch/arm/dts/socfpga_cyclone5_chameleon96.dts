@@ -1,0 +1,51 @@
+/*
+ * Copyright Arrow Electronics, Inc. (C) 2017
+ *
+ * SPDX-License-Identifier:	GPL-2.0+
+ */
+
+#include "socfpga_cyclone5.dtsi"
+
+/ {
+	model = "Arrow Chameleon96 Board";
+	compatible = "altr,socfpga-cyclone5", "altr,socfpga";
+
+	chosen {
+		bootargs = "console=ttyS0,115200";
+	};
+
+	memory {
+		name = "memory";
+		device_type = "memory";
+		reg = <0x0 0x20000000>; /* 512MB */
+	};
+
+	soc {
+		u-boot,dm-pre-reloc;
+	};
+};
+
+&gpio0 {
+	status = "okay";
+};
+
+&gpio1 {
+	status = "okay";
+};
+
+&gpio2 {
+	status = "okay";
+};
+
+&i2c2 {
+	status = "okay";
+};
+
+&mmc0 {
+	status = "okay";
+	u-boot,dm-pre-reloc;
+};
+
+&usb1 {
+	status = "okay";
+};
