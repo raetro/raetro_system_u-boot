@@ -22,15 +22,6 @@ DECLARE_GLOBAL_DATA_PTR;
  * Initialization function which happen at early stage of c code
  */
 void s_init(void) {
-#ifdef TARGET_SOCFPGA_ARROW_CHAMELEON96
-	// YHN, turn USER LED 2
-	int reg;
-	reg = readl(0xFF708000); /* Get the current stae of GPIO0 */
-	reg &= 0xFFBFFFFF;       /* Set GPIO 22 (USER 2) Low (on) */
-	writel(reg, 0xFF708000);
-
-	return 0;
-#endif
 }
 
 /*
@@ -71,91 +62,4 @@ int board_usb_init(int index, enum usb_init_type init) {
 int g_dnl_board_usb_cable_connected(void) {
 	return 1;
 }
-#endif
-
-#ifdef CONFIG_BOARD_LATE_INIT
-int board_late_init(void) {
-//	int rc = 0;
-//	int flag1 = 0;
-//
-//	int reg;
-//
-//	int tries = 0;
-//	int i;
-//	int error = 0;
-//
-//	/* YHN, add code for:
-//	1. Put USB PHY in reset
-//	2. Put USB HUB in reset
-//	3. Load FPGA
-//	4. Release USB PHY/HUB from reset*/
-//
-	// Step 1
-	printf("Place USBOTG PHY in reset\n");  // Reset on RGMII0_TX_CTL => GPIO09 => bit 9 of GPIO0
-	reg = readl(0xFF708000);
-	reg |= 0x00000200;              // Set Bit 9 to high, USB PHY is a reset lhigh
-	writel(reg, 0xFF708000);
-	reg = readl(0xFF708004);
-	reg |= 0x00000200;              // Set Bit 9 to high, make it an output
-	writel(reg, 0xFF708004);
-//
-	// Step 2
-	printf("Place USB HUB in reset\n");  // nReset on RGMII0_TX_CLK => GPIO00 => bit 0 of GPIO0
-	reg = readl(0xFF708000);
-	reg &= 0xFFFFFFFE;                   // Set Bit 0 to low, USB HUB is reset low
-	writel(reg, 0xFF708000);
-	reg = readl(0xFF708004);
-	reg |= 0x00000001;                   // Set Bit 0 to high, make it an output
-	writel(reg, 0xFF708004);
-//
-//
-//	// Step 3
-//	printf("\n");
-//	printf("======================\n");
-//	printf("Loading FPGA .rbf FILE\n");
-//	printf("======================\n");
-//
-//	rc = run_command("fatload mmc 0:1 $fpgadata cv96.rbf ", flag1);
-//
-//	printf("Read FPGA File Status = 0x%x.\n", rc);
-//
-//	tries = 1;
-//
-//	while (tries <= 5) {
-//		rc = run_command("fpga load 0 $fpgadata $filesize ", flag1);
-//		//rc = run_command ("fpga load 0 0x2000000 $filesize ", flag1);
-//		if(rc == 0) {
-//			break;
-//		} else {
-//			tries++;
-//		}
-//
-//	}
-//	printf("Try # = 0x%x.\n", tries);
-//	printf("Programming FPGA Status = 0x%x.\n", rc);
-//	rc = run_command("run bridge_enable_handoff ", flag1);
-//	printf("HPS2FPGA Bridge Status = 0x%x.\n", rc);
-//	reg = readl(0xFF200000);
-//	printf("FPGA HDL ID = 0x%x.\n", reg);
-//
-//
-//	// Step 4
-//	printf("USBOTG PHY is out of reset\n");  // Reset on RMGII0_TX_CTL => GPIO09 => bit 9 of GPIO0
-//	reg = readl(0xFF708000);
-//	reg &= 0xFFFFFDFF;              // Set Bit 1 to low
-//	writel(reg, 0xFF708000);
-//
-//	printf("USB HUB is out of reset\n");  // nReset on RGMII0_TX_CLK => GPIO00 => bit 0 of GPIO0
-//	reg = readl(0xFF708000);
-//	reg |= 0x00000001;                   // Set Bit 0 to high, USB HUB is reset low
-//	writel(reg, 0xFF708000);
-//
-//	// YHN, turn USER LED 3
-//	reg = readl(0xFF708000); /* Get the current stae of GPIO0 */
-//	reg &= 0xFDFFFFFF;       /* Set GPIO 25 (USER 3) Low (on) */
-//	writel(reg, 0xFF708000);
-
-	return 0;
-}
-
 #endif
