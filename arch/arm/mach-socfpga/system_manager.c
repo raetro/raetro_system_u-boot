@@ -11,41 +11,45 @@
 
 DECLARE_GLOBAL_DATA_PTR;
 
-static struct socfpga_system_manager *sysmgr_regs =
-	(struct socfpga_system_manager *)SOCFPGA_SYSMGR_ADDRESS;
+static struct socfpga_system_manager *sysmgr_regs = (struct socfpga_system_manager *) SOCFPGA_SYSMGR_ADDRESS;
 
 /*
  * Populate the value for SYSMGR.FPGAINTF.MODULE based on pinmux setting.
  * The value is not wrote to SYSMGR.FPGAINTF.MODULE but
  * CONFIG_SYSMGR_ISWGRP_HANDOFF.
  */
-static void populate_sysmgr_fpgaintf_module(void)
-{
+static void populate_sysmgr_fpgaintf_module(void) {
 	uint32_t handoff_val = 0;
 
 	/* ISWGRP_HANDOFF_FPGAINTF */
 	writel(0, &sysmgr_regs->iswgrp_handoff[2]);
 
 	/* Enable the signal for those HPS peripherals that use FPGA. */
-	if (readl(&sysmgr_regs->nandusefpga) == SYSMGR_FPGAINTF_USEFPGA)
+	if(readl(&sysmgr_regs->nandusefpga) == SYSMGR_FPGAINTF_USEFPGA) {
 		handoff_val |= SYSMGR_FPGAINTF_NAND;
-	if (readl(&sysmgr_regs->rgmii1usefpga) == SYSMGR_FPGAINTF_USEFPGA)
+	}
+	if(readl(&sysmgr_regs->rgmii1usefpga) == SYSMGR_FPGAINTF_USEFPGA) {
 		handoff_val |= SYSMGR_FPGAINTF_EMAC1;
-	if (readl(&sysmgr_regs->sdmmcusefpga) == SYSMGR_FPGAINTF_USEFPGA)
+	}
+	if(readl(&sysmgr_regs->sdmmcusefpga) == SYSMGR_FPGAINTF_USEFPGA) {
 		handoff_val |= SYSMGR_FPGAINTF_SDMMC;
-	if (readl(&sysmgr_regs->rgmii0usefpga) == SYSMGR_FPGAINTF_USEFPGA)
+	}
+	if(readl(&sysmgr_regs->rgmii0usefpga) == SYSMGR_FPGAINTF_USEFPGA) {
 		handoff_val |= SYSMGR_FPGAINTF_EMAC0;
-	if (readl(&sysmgr_regs->spim0usefpga) == SYSMGR_FPGAINTF_USEFPGA)
+	}
+	if(readl(&sysmgr_regs->spim0usefpga) == SYSMGR_FPGAINTF_USEFPGA) {
 		handoff_val |= SYSMGR_FPGAINTF_SPIM0;
-	if (readl(&sysmgr_regs->spim1usefpga) == SYSMGR_FPGAINTF_USEFPGA)
+	}
+	if(readl(&sysmgr_regs->spim1usefpga) == SYSMGR_FPGAINTF_USEFPGA) {
 		handoff_val |= SYSMGR_FPGAINTF_SPIM1;
+	}
 
 	/* populate (not writing) the value for SYSMGR.FPGAINTF.MODULE
 	based on pinmux setting */
 	setbits_le32(&sysmgr_regs->iswgrp_handoff[2], handoff_val);
 
 	handoff_val = readl(&sysmgr_regs->iswgrp_handoff[2]);
-	if (fpgamgr_test_fpga_ready()) {
+	if(fpgamgr_test_fpga_ready()) {
 		/* Enable the required signals only */
 		writel(handoff_val, &sysmgr_regs->fpgaintfgrp_module);
 	}
@@ -54,9 +58,8 @@ static void populate_sysmgr_fpgaintf_module(void)
 /*
  * Configure all the pin muxes
  */
-void sysmgr_pinmux_init(void)
-{
-	uint32_t regs = (uint32_t)&sysmgr_regs->emacio[0];
+void sysmgr_pinmux_init(void) {
+	uint32_t regs = (uint32_t) & sysmgr_regs->emacio[0];
 	const u8 *sys_mgr_init_table;
 	unsigned int len;
 	int i;
@@ -74,12 +77,10 @@ void sysmgr_pinmux_init(void)
 /*
  * This bit allows the bootrom to configure the IOs after a warm reset.
  */
-void sysmgr_config_warmrstcfgio(int enable)
-{
-	if (enable)
-		setbits_le32(&sysmgr_regs->romcodegrp_ctrl,
-			     SYSMGR_ROMCODEGRP_CTRL_WARMRSTCFGIO);
-	else
-		clrbits_le32(&sysmgr_regs->romcodegrp_ctrl,
-			     SYSMGR_ROMCODEGRP_CTRL_WARMRSTCFGIO);
+void sysmgr_config_warmrstcfgio(int enable) {
+	if(enable) {
+		setbits_le32(&sysmgr_regs->romcodegrp_ctrl, SYSMGR_ROMCODEGRP_CTRL_WARMRSTCFGIO);
+	} else {
+		clrbits_le32(&sysmgr_regs->romcodegrp_ctrl, SYSMGR_ROMCODEGRP_CTRL_WARMRSTCFGIO);
+	}
 }

@@ -17,7 +17,7 @@ struct nic301_registers {
 	u32	l4osc1;
 	u32	l4spim;
 	u32	stm;
-	u32	lwhps2fpgaregs;			/* 0x20 */
+	u32	lwhps2fpgaregs;		/* 0x20 */
 	u32	_pad_0x24_0x28[1];
 	u32	usb1;
 	u32	nanddata;
@@ -26,16 +26,16 @@ struct nic301_registers {
 	u32	nandregs;
 	u32	qspidata;
 	u32	fpgamgrdata;
-	u32	hps2fpgaregs;			/* 0x90 */
+	u32	hps2fpgaregs;		/* 0x90 */
 	u32	acp;
 	u32	rom;
 	u32	ocram;
 	u32	sdrdata;			/* 0xA0 */
 	u32	_pad_0xa4_0x1fd0[1995];
 	/* ID Register Group */
-	u32	periph_id_4;			/* 0x1FD0 */
+	u32	periph_id_4;		/* 0x1FD0 */
 	u32	_pad_0x1fd4_0x1fe0[3];
-	u32	periph_id_0;			/* 0x1FE0 */
+	u32	periph_id_0;		/* 0x1FE0 */
 	u32	periph_id_1;
 	u32	periph_id_2;
 	u32	periph_id_3;
@@ -104,7 +104,7 @@ struct nic301_registers {
 	/* HPS2FPGA */
 	u32	hps2fpga_fn_mod_bm_iss;
 	u32	_pad_0x2400c_0x24040[13];
-	u32	hps2fpga_wr_tidemark;		/* 0x24040 */
+	u32	hps2fpga_wr_tidemark;	/* 0x24040 */
 	u32	_pad_0x24044_0x24108[49];
 	u32	hps2fpga_fn_mod;
 	u32	_pad_0x2410c_0x25008[959];
@@ -151,7 +151,7 @@ struct nic301_registers {
 	u32	dma_fn_mod;
 	u32	_pad_0x4510c_0x46040[973];
 	/* FPGA2HPS */
-	u32	fpga2hps_wr_tidemark;		/* 0x46040 */
+	u32	fpga2hps_wr_tidemark;	/* 0x46040 */
 	u32	_pad_0x46044_0x46100[47];
 	u32	fpga2hps_read_qos;		/* 0x46100 */
 	u32	fpga2hps_write_qos;

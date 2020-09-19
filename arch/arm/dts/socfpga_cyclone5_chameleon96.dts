@@ -7,7 +7,7 @@
 #include "socfpga_cyclone5.dtsi"
 
 / {
-	model = "Arrow Chameleon96 Board";
+	model = "Arrow Chameleon96";
 	compatible = "altr,socfpga-cyclone5", "altr,socfpga";
 
 	chosen {

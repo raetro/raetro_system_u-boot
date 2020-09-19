@@ -22,38 +22,33 @@
 
 DECLARE_GLOBAL_DATA_PTR;
 
-static struct pl310_regs *const pl310 =
-	(struct pl310_regs *)CONFIG_SYS_PL310_BASE;
-static struct scu_registers *scu_regs =
-	(struct scu_registers *)SOCFPGA_MPUSCU_ADDRESS;
-static struct nic301_registers *nic301_regs =
-	(struct nic301_registers *)SOCFPGA_L3REGS_ADDRESS;
-static struct socfpga_system_manager *sysmgr_regs =
-	(struct socfpga_system_manager *)SOCFPGA_SYSMGR_ADDRESS;
+static struct pl310_regs *const pl310 = (struct pl310_regs *) CONFIG_SYS_PL310_BASE;
+static struct scu_registers *scu_regs = (struct scu_registers *) SOCFPGA_MPUSCU_ADDRESS;
+static struct nic301_registers *nic301_regs = (struct nic301_registers *) SOCFPGA_L3REGS_ADDRESS;
+static struct socfpga_system_manager *sysmgr_regs = (struct socfpga_system_manager *) SOCFPGA_SYSMGR_ADDRESS;
 
-u32 spl_boot_device(void)
-{
+u32 spl_boot_device(void) {
 	const u32 bsel = readl(&sysmgr_regs->bootinfo);
 
 	switch (bsel & 0x7) {
-	case 0x1:	/* FPGA (HPS2FPGA Bridge) */
-		return BOOT_DEVICE_RAM;
-	case 0x2:	/* NAND Flash (1.8V) */
-	case 0x3:	/* NAND Flash (3.0V) */
-		socfpga_per_reset(SOCFPGA_RESET(NAND), 0);
-		return BOOT_DEVICE_NAND;
-	case 0x4:	/* SD/MMC External Transceiver (1.8V) */
-	case 0x5:	/* SD/MMC Internal Transceiver (3.0V) */
-		socfpga_per_reset(SOCFPGA_RESET(SDMMC), 0);
-		socfpga_per_reset(SOCFPGA_RESET(DMA), 0);
-		return BOOT_DEVICE_MMC1;
-	case 0x6:	/* QSPI Flash (1.8V) */
-	case 0x7:	/* QSPI Flash (3.0V) */
-		socfpga_per_reset(SOCFPGA_RESET(QSPI), 0);
-		return BOOT_DEVICE_SPI;
-	default:
-		printf("Invalid boot device (bsel=%08x)!\n", bsel);
-		hang();
+		case 0x1:    /* FPGA (HPS2FPGA Bridge) */
+			return BOOT_DEVICE_RAM;
+		case 0x2:    /* NAND Flash (1.8V) */
+		case 0x3:    /* NAND Flash (3.0V) */
+			socfpga_per_reset(SOCFPGA_RESET(NAND), 0);
+			return BOOT_DEVICE_NAND;
+		case 0x4:    /* SD/MMC External Transceiver (1.8V) */
+		case 0x5:    /* SD/MMC Internal Transceiver (3.0V) */
+			socfpga_per_reset(SOCFPGA_RESET(SDMMC), 0);
+			socfpga_per_reset(SOCFPGA_RESET(DMA), 0);
+			return BOOT_DEVICE_MMC1;
+		case 0x6:    /* QSPI Flash (1.8V) */
+		case 0x7:    /* QSPI Flash (3.0V) */
+			socfpga_per_reset(SOCFPGA_RESET(QSPI), 0);
+			return BOOT_DEVICE_SPI;
+		default:
+			printf("Invalid boot device (bsel=%08x)!\n", bsel);
+			hang();
 	}
 }
 
@@ -68,8 +63,7 @@ u32 spl_boot_mode(const u32 boot_device)
 }
 #endif
 
-static void socfpga_nic301_slave_ns(void)
-{
+static void socfpga_nic301_slave_ns(void) {
 	writel(0x1, &nic301_regs->lwhps2fpgaregs);
 	writel(0x1, &nic301_regs->hps2fpgaregs);
 	writel(0x1, &nic301_regs->acp);
@@ -78,8 +72,7 @@ static void socfpga_nic301_slave_ns(void)
 	writel(0x1, &nic301_regs->sdrdata);
 }
 
-void board_init_f(ulong dummy)
-{
+void board_init_f(ulong dummy) {
 #ifndef CONFIG_SOCFPGA_VIRTUAL_TARGET
 	const struct cm_config *cm_default_cfg = cm_get_default_config();
 #endif
@@ -91,12 +84,12 @@ void board_init_f(ulong dummy)
 	 * and DBE might triggered during power on
 	 */
 	reg = readl(&sysmgr_regs->eccgrp_ocram);
-	if (reg & SYSMGR_ECC_OCRAM_SERR)
-		writel(SYSMGR_ECC_OCRAM_SERR | SYSMGR_ECC_OCRAM_EN,
-		       &sysmgr_regs->eccgrp_ocram);
-	if (reg & SYSMGR_ECC_OCRAM_DERR)
-		writel(SYSMGR_ECC_OCRAM_DERR  | SYSMGR_ECC_OCRAM_EN,
-		       &sysmgr_regs->eccgrp_ocram);
+	if(reg & SYSMGR_ECC_OCRAM_SERR) {
+		writel(SYSMGR_ECC_OCRAM_SERR | SYSMGR_ECC_OCRAM_EN, &sysmgr_regs->eccgrp_ocram);
+	}
+	if(reg & SYSMGR_ECC_OCRAM_DERR) {
+		writel(SYSMGR_ECC_OCRAM_DERR | SYSMGR_ECC_OCRAM_EN, &sysmgr_regs->eccgrp_ocram);
+	}
 
 	memset(__bss_start, 0, __bss_end - __bss_start);
 
@@ -106,7 +99,7 @@ void board_init_f(ulong dummy)
 	setbits_le32(&scu_regs->sacr, 0xfff);
 
 	/* Remap SDRAM to 0x0 */
-	writel(0x1, &nic301_regs->remap);	/* remap.mpuzero */
+	writel(0x1, &nic301_regs->remap);    /* remap.mpuzero */
 	writel(0x1, &pl310->pl310_addr_filter_start);
 
 #ifndef CONFIG_SOCFPGA_VIRTUAL_TARGET
@@ -133,8 +126,9 @@ void board_init_f(ulong dummy)
 	sysmgr_config_warmrstcfgio(1);
 
 	/* configure the IOCSR / IO buffer settings */
-	if (scan_mgr_configure_iocsr())
+	if(scan_mgr_configure_iocsr()) {
 		hang();
+	}
 
 	sysmgr_config_warmrstcfgio(0);
 
@@ -156,14 +150,14 @@ void board_init_f(ulong dummy)
 	/* enable console uart printing */
 	preloader_console_init();
 
-	if (sdram_mmr_init_full(0xffffffff) != 0) {
+	if(sdram_mmr_init_full(0xffffffff) != 0) {
 		puts("SDRAM init failed.\n");
 		hang();
 	}
 
 	debug("SDRAM: Calibrating PHY\n");
 	/* SDRAM calibration */
-	if (sdram_calibration_full() == 0) {
+	if(sdram_calibration_full() == 0) {
 		puts("SDRAM calibration failed.\n");
 		hang();
 	}
@@ -172,7 +166,7 @@ void board_init_f(ulong dummy)
 	debug("SDRAM: %ld MiB\n", sdram_size >> 20);
 
 	/* Sanity check ensure correct SDRAM size specified */
-	if (get_ram_size(0, sdram_size) != sdram_size) {
+	if(get_ram_size(0, sdram_size) != sdram_size) {
 		puts("SDRAM size check failed!\n");
 		hang();
 	}

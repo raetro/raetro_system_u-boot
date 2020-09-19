@@ -3,219 +3,225 @@
  *
  * SPDX-License-Identifier:	GPL-2.0+
  */
-#ifndef	_SDRAM_H_
-#define	_SDRAM_H_
+#ifndef    _SDRAM_H_
+#define    _SDRAM_H_
 
 #ifndef __ASSEMBLY__
 
 unsigned long sdram_calculate_size(void);
+
 int sdram_mmr_init_full(unsigned int sdr_phy_reg);
+
 int sdram_calibration_full(void);
 
 const struct socfpga_sdram_config *socfpga_get_sdram_config(void);
 
 void socfpga_get_seq_ac_init(const u32 **init, unsigned int *nelem);
+
 void socfpga_get_seq_inst_init(const u32 **init, unsigned int *nelem);
+
 const struct socfpga_sdram_rw_mgr_config *socfpga_get_sdram_rwmgr_config(void);
+
 const struct socfpga_sdram_io_config *socfpga_get_sdram_io_config(void);
+
 const struct socfpga_sdram_misc_config *socfpga_get_sdram_misc_config(void);
 
-#define SDR_CTRLGRP_ADDRESS	(SOCFPGA_SDR_ADDRESS | 0x5000)
+#define SDR_CTRLGRP_ADDRESS    (SOCFPGA_SDR_ADDRESS | 0x5000)
 
 struct socfpga_sdr_ctrl {
-	u32	ctrl_cfg;
-	u32	dram_timing1;
-	u32	dram_timing2;
-	u32	dram_timing3;
-	u32	dram_timing4;	/* 0x10 */
-	u32	lowpwr_timing;
-	u32	dram_odt;
-	u32	extratime1;
-	u32	__padding0[3];
-	u32	dram_addrw;	/* 0x2c */
-	u32	dram_if_width;	/* 0x30 */
-	u32	dram_dev_width;
-	u32	dram_sts;
-	u32	dram_intr;
-	u32	sbe_count;	/* 0x40 */
-	u32	dbe_count;
-	u32	err_addr;
-	u32	drop_count;
-	u32	drop_addr;	/* 0x50 */
-	u32	lowpwr_eq;
-	u32	lowpwr_ack;
-	u32	static_cfg;
-	u32	ctrl_width;	/* 0x60 */
-	u32	cport_width;
-	u32	cport_wmap;
-	u32	cport_rmap;
-	u32	rfifo_cmap;	/* 0x70 */
-	u32	wfifo_cmap;
-	u32	cport_rdwr;
-	u32	port_cfg;
-	u32	fpgaport_rst;	/* 0x80 */
-	u32	__padding1;
-	u32	fifo_cfg;
-	u32	protport_default;
-	u32	prot_rule_addr;	/* 0x90 */
-	u32	prot_rule_id;
-	u32	prot_rule_data;
-	u32	prot_rule_rdwr;
-	u32	__padding2[3];
-	u32	mp_priority;	/* 0xac */
-	u32	mp_weight0;	/* 0xb0 */
-	u32	mp_weight1;
-	u32	mp_weight2;
-	u32	mp_weight3;
-	u32	mp_pacing0;	/* 0xc0 */
-	u32	mp_pacing1;
-	u32	mp_pacing2;
-	u32	mp_pacing3;
-	u32	mp_threshold0;	/* 0xd0 */
-	u32	mp_threshold1;
-	u32	mp_threshold2;
-	u32	__padding3[29];
-	u32	phy_ctrl0;	/* 0x150 */
-	u32	phy_ctrl1;
-	u32	phy_ctrl2;
+	u32 ctrl_cfg;
+	u32 dram_timing1;
+	u32 dram_timing2;
+	u32 dram_timing3;
+	u32 dram_timing4;    /* 0x10 */
+	u32 lowpwr_timing;
+	u32 dram_odt;
+	u32 extratime1;
+	u32 __padding0[3];
+	u32 dram_addrw;    /* 0x2c */
+	u32 dram_if_width;    /* 0x30 */
+	u32 dram_dev_width;
+	u32 dram_sts;
+	u32 dram_intr;
+	u32 sbe_count;    /* 0x40 */
+	u32 dbe_count;
+	u32 err_addr;
+	u32 drop_count;
+	u32 drop_addr;    /* 0x50 */
+	u32 lowpwr_eq;
+	u32 lowpwr_ack;
+	u32 static_cfg;
+	u32 ctrl_width;    /* 0x60 */
+	u32 cport_width;
+	u32 cport_wmap;
+	u32 cport_rmap;
+	u32 rfifo_cmap;    /* 0x70 */
+	u32 wfifo_cmap;
+	u32 cport_rdwr;
+	u32 port_cfg;
+	u32 fpgaport_rst;    /* 0x80 */
+	u32 __padding1;
+	u32 fifo_cfg;
+	u32 protport_default;
+	u32 prot_rule_addr;    /* 0x90 */
+	u32 prot_rule_id;
+	u32 prot_rule_data;
+	u32 prot_rule_rdwr;
+	u32 __padding2[3];
+	u32 mp_priority;    /* 0xac */
+	u32 mp_weight0;    /* 0xb0 */
+	u32 mp_weight1;
+	u32 mp_weight2;
+	u32 mp_weight3;
+	u32 mp_pacing0;    /* 0xc0 */
+	u32 mp_pacing1;
+	u32 mp_pacing2;
+	u32 mp_pacing3;
+	u32 mp_threshold0;    /* 0xd0 */
+	u32 mp_threshold1;
+	u32 mp_threshold2;
+	u32 __padding3[29];
+	u32 phy_ctrl0;    /* 0x150 */
+	u32 phy_ctrl1;
+	u32 phy_ctrl2;
 };
 
 /* SDRAM configuration structure for the SPL. */
 struct socfpga_sdram_config {
-	u32	ctrl_cfg;
-	u32	dram_timing1;
-	u32	dram_timing2;
-	u32	dram_timing3;
-	u32	dram_timing4;
-	u32	lowpwr_timing;
-	u32	dram_odt;
-	u32	extratime1;
-	u32	dram_addrw;
-	u32	dram_if_width;
-	u32	dram_dev_width;
-	u32	dram_intr;
-	u32	lowpwr_eq;
-	u32	static_cfg;
-	u32	ctrl_width;
-	u32	cport_width;
-	u32	cport_wmap;
-	u32	cport_rmap;
-	u32	rfifo_cmap;
-	u32	wfifo_cmap;
-	u32	cport_rdwr;
-	u32	port_cfg;
-	u32	fpgaport_rst;
-	u32	fifo_cfg;
-	u32	mp_priority;
-	u32	mp_weight0;
-	u32	mp_weight1;
-	u32	mp_weight2;
-	u32	mp_weight3;
-	u32	mp_pacing0;
-	u32	mp_pacing1;
-	u32	mp_pacing2;
-	u32	mp_pacing3;
-	u32	mp_threshold0;
-	u32	mp_threshold1;
-	u32	mp_threshold2;
-	u32	phy_ctrl0;
+	u32 ctrl_cfg;
+	u32 dram_timing1;
+	u32 dram_timing2;
+	u32 dram_timing3;
+	u32 dram_timing4;
+	u32 lowpwr_timing;
+	u32 dram_odt;
+	u32 extratime1;
+	u32 dram_addrw;
+	u32 dram_if_width;
+	u32 dram_dev_width;
+	u32 dram_intr;
+	u32 lowpwr_eq;
+	u32 static_cfg;
+	u32 ctrl_width;
+	u32 cport_width;
+	u32 cport_wmap;
+	u32 cport_rmap;
+	u32 rfifo_cmap;
+	u32 wfifo_cmap;
+	u32 cport_rdwr;
+	u32 port_cfg;
+	u32 fpgaport_rst;
+	u32 fifo_cfg;
+	u32 mp_priority;
+	u32 mp_weight0;
+	u32 mp_weight1;
+	u32 mp_weight2;
+	u32 mp_weight3;
+	u32 mp_pacing0;
+	u32 mp_pacing1;
+	u32 mp_pacing2;
+	u32 mp_pacing3;
+	u32 mp_threshold0;
+	u32 mp_threshold1;
+	u32 mp_threshold2;
+	u32 phy_ctrl0;
 };
 
 struct socfpga_sdram_rw_mgr_config {
-	u8	activate_0_and_1;
-	u8	activate_0_and_1_wait1;
-	u8	activate_0_and_1_wait2;
-	u8	activate_1;
-	u8	clear_dqs_enable;
-	u8	guaranteed_read;
-	u8	guaranteed_read_cont;
-	u8	guaranteed_write;
-	u8	guaranteed_write_wait0;
-	u8	guaranteed_write_wait1;
-	u8	guaranteed_write_wait2;
-	u8	guaranteed_write_wait3;
-	u8	idle;
-	u8	idle_loop1;
-	u8	idle_loop2;
-	u8	init_reset_0_cke_0;
-	u8	init_reset_1_cke_0;
-	u8	lfsr_wr_rd_bank_0;
-	u8	lfsr_wr_rd_bank_0_data;
-	u8	lfsr_wr_rd_bank_0_dqs;
-	u8	lfsr_wr_rd_bank_0_nop;
-	u8	lfsr_wr_rd_bank_0_wait;
-	u8	lfsr_wr_rd_bank_0_wl_1;
-	u8	lfsr_wr_rd_dm_bank_0;
-	u8	lfsr_wr_rd_dm_bank_0_data;
-	u8	lfsr_wr_rd_dm_bank_0_dqs;
-	u8	lfsr_wr_rd_dm_bank_0_nop;
-	u8	lfsr_wr_rd_dm_bank_0_wait;
-	u8	lfsr_wr_rd_dm_bank_0_wl_1;
-	u8	mrs0_dll_reset;
-	u8	mrs0_dll_reset_mirr;
-	u8	mrs0_user;
-	u8	mrs0_user_mirr;
-	u8	mrs1;
-	u8	mrs1_mirr;
-	u8	mrs2;
-	u8	mrs2_mirr;
-	u8	mrs3;
-	u8	mrs3_mirr;
-	u8	precharge_all;
-	u8	read_b2b;
-	u8	read_b2b_wait1;
-	u8	read_b2b_wait2;
-	u8	refresh_all;
-	u8	rreturn;
-	u8	sgle_read;
-	u8	zqcl;
+	u8 activate_0_and_1;
+	u8 activate_0_and_1_wait1;
+	u8 activate_0_and_1_wait2;
+	u8 activate_1;
+	u8 clear_dqs_enable;
+	u8 guaranteed_read;
+	u8 guaranteed_read_cont;
+	u8 guaranteed_write;
+	u8 guaranteed_write_wait0;
+	u8 guaranteed_write_wait1;
+	u8 guaranteed_write_wait2;
+	u8 guaranteed_write_wait3;
+	u8 idle;
+	u8 idle_loop1;
+	u8 idle_loop2;
+	u8 init_reset_0_cke_0;
+	u8 init_reset_1_cke_0;
+	u8 lfsr_wr_rd_bank_0;
+	u8 lfsr_wr_rd_bank_0_data;
+	u8 lfsr_wr_rd_bank_0_dqs;
+	u8 lfsr_wr_rd_bank_0_nop;
+	u8 lfsr_wr_rd_bank_0_wait;
+	u8 lfsr_wr_rd_bank_0_wl_1;
+	u8 lfsr_wr_rd_dm_bank_0;
+	u8 lfsr_wr_rd_dm_bank_0_data;
+	u8 lfsr_wr_rd_dm_bank_0_dqs;
+	u8 lfsr_wr_rd_dm_bank_0_nop;
+	u8 lfsr_wr_rd_dm_bank_0_wait;
+	u8 lfsr_wr_rd_dm_bank_0_wl_1;
+	u8 mrs0_dll_reset;
+	u8 mrs0_dll_reset_mirr;
+	u8 mrs0_user;
+	u8 mrs0_user_mirr;
+	u8 mrs1;
+	u8 mrs1_mirr;
+	u8 mrs2;
+	u8 mrs2_mirr;
+	u8 mrs3;
+	u8 mrs3_mirr;
+	u8 precharge_all;
+	u8 read_b2b;
+	u8 read_b2b_wait1;
+	u8 read_b2b_wait2;
+	u8 refresh_all;
+	u8 rreturn;
+	u8 sgle_read;
+	u8 zqcl;
 
-	u8	true_mem_data_mask_width;
-	u8	mem_address_mirroring;
-	u8	mem_data_mask_width;
-	u8	mem_data_width;
-	u8	mem_dq_per_read_dqs;
-	u8	mem_dq_per_write_dqs;
-	u8	mem_if_read_dqs_width;
-	u8	mem_if_write_dqs_width;
-	u8	mem_number_of_cs_per_dimm;
-	u8	mem_number_of_ranks;
-	u8	mem_virtual_groups_per_read_dqs;
-	u8	mem_virtual_groups_per_write_dqs;
+	u8 true_mem_data_mask_width;
+	u8 mem_address_mirroring;
+	u8 mem_data_mask_width;
+	u8 mem_data_width;
+	u8 mem_dq_per_read_dqs;
+	u8 mem_dq_per_write_dqs;
+	u8 mem_if_read_dqs_width;
+	u8 mem_if_write_dqs_width;
+	u8 mem_number_of_cs_per_dimm;
+	u8 mem_number_of_ranks;
+	u8 mem_virtual_groups_per_read_dqs;
+	u8 mem_virtual_groups_per_write_dqs;
 };
 
 struct socfpga_sdram_io_config {
-	u16	delay_per_opa_tap;
-	u8	delay_per_dchain_tap;
-	u8	delay_per_dqs_en_dchain_tap;
-	u8	dll_chain_length;
-	u8	dqdqs_out_phase_max;
-	u8	dqs_en_delay_max;
-	u8	dqs_en_delay_offset;
-	u8	dqs_en_phase_max;
-	u8	dqs_in_delay_max;
-	u8	dqs_in_reserve;
-	u8	dqs_out_reserve;
-	u8	io_in_delay_max;
-	u8	io_out1_delay_max;
-	u8	io_out2_delay_max;
-	u8	shift_dqs_en_when_shift_dqs;
+	u16 delay_per_opa_tap;
+	u8 delay_per_dchain_tap;
+	u8 delay_per_dqs_en_dchain_tap;
+	u8 dll_chain_length;
+	u8 dqdqs_out_phase_max;
+	u8 dqs_en_delay_max;
+	u8 dqs_en_delay_offset;
+	u8 dqs_en_phase_max;
+	u8 dqs_in_delay_max;
+	u8 dqs_in_reserve;
+	u8 dqs_out_reserve;
+	u8 io_in_delay_max;
+	u8 io_out1_delay_max;
+	u8 io_out2_delay_max;
+	u8 shift_dqs_en_when_shift_dqs;
 };
 
 struct socfpga_sdram_misc_config {
-	u32	reg_file_init_seq_signature;
-	u8	afi_rate_ratio;
-	u8	calib_lfifo_offset;
-	u8	calib_vfifo_offset;
-	u8	enable_super_quick_calibration;
-	u8	max_latency_count_width;
-	u8	read_valid_fifo_size;
-	u8	tinit_cntr0_val;
-	u8	tinit_cntr1_val;
-	u8	tinit_cntr2_val;
-	u8	treset_cntr0_val;
-	u8	treset_cntr1_val;
-	u8	treset_cntr2_val;
+	u32 reg_file_init_seq_signature;
+	u8 afi_rate_ratio;
+	u8 calib_lfifo_offset;
+	u8 calib_vfifo_offset;
+	u8 enable_super_quick_calibration;
+	u8 max_latency_count_width;
+	u8 read_valid_fifo_size;
+	u8 tinit_cntr0_val;
+	u8 tinit_cntr1_val;
+	u8 tinit_cntr2_val;
+	u8 treset_cntr0_val;
+	u8 treset_cntr1_val;
+	u8 treset_cntr2_val;
 };
 
 #define SDR_CTRLGRP_CTRLCFG_NODMPINS_LSB 23
@@ -435,8 +441,8 @@ SDR_CTRLGRP_MPTHRESHOLDRST_2_THRESHOLDRSTCYCLES_79_64_MASK \
 #define SDR_CTRLGRP_EXTRATIME1_RD_TO_WR_DIFF_LSB 28
 
 /* SDRAM width macro for configuration with ECC */
-#define SDRAM_WIDTH_32BIT_WITH_ECC	40
-#define SDRAM_WIDTH_16BIT_WITH_ECC	24
+#define SDRAM_WIDTH_32BIT_WITH_ECC    40
+#define SDRAM_WIDTH_16BIT_WITH_ECC    24
 
 #endif
 #endif /* _SDRAM_H_ */

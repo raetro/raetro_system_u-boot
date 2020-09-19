@@ -8,11 +8,11 @@
 #define _SOCFPGA_TIMER_H_
 
 struct socfpga_timer {
-	u32	load_val;
-	u32	curr_val;
-	u32	ctrl;
-	u32	eoi;
-	u32	int_stat;
+	u32 load_val;
+	u32 curr_val;
+	u32 ctrl;
+	u32 eoi;
+	u32 int_stat;
 };
 
 #endif

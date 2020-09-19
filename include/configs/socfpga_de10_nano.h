@@ -15,13 +15,13 @@
 #define CONFIG_HW_WATCHDOG
 
 /* Memory configurations */
-#define PHYS_SDRAM_1_SIZE	0x40000000	/* 1GiB */
+#define PHYS_SDRAM_1_SIZE		0x40000000	/* 1GiB */
 
 /* Booting Linux */
-#define CONFIG_BOOTFILE		"fitImage"
-#define CONFIG_BOOTARGS		"console=ttyS0," __stringify(CONFIG_BAUDRATE) " $v loop.max_part=8 mem=511M memmap=513M$511M"
-#define CONFIG_BOOTCOMMAND	"mw 0xff709004 0x800; run mmcload; run mmcboot"
-#define CONFIG_LOADADDR		0x01000000
+#define CONFIG_BOOTFILE			"fitImage"
+#define CONFIG_BOOTARGS			"console=ttyS0," __stringify(CONFIG_BAUDRATE) " $v loop.max_part=8 mem=511M memmap=513M$511M"
+#define CONFIG_BOOTCOMMAND		"mw 0xff709004 0x800; run mmcload; run mmcboot"
+#define CONFIG_LOADADDR			0x01000000
 #define CONFIG_SYS_LOAD_ADDR	CONFIG_LOADADDR
 
 /* Ethernet on SoC (EMAC) */
