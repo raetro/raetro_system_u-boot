@@ -14,12 +14,6 @@
 #define CONFIG_FS_FAT
 #define CONFIG_HW_WATCHDOG
 
-/* Ethernet on SoC (EMAC) */
-#if defined(CONFIG_CMD_NET)
-#define CONFIG_PHY_MICREL
-#define CONFIG_PHY_MICREL_KSZ9031
-#endif
-
 #define CONFIG_ENV_IS_IN_MMC
 
 #ifndef CONFIG_SYS_MMCSD_FS_BOOT_PARTITION
@@ -39,7 +33,7 @@
 #define C96_CORE_FILE        "menu.rbf"
 #define C96_BOOT_FILE        "/linux/zImage_dtb"
 #define C96_LINUX_FILE       "/linux/linux.img"
-#define C96_DEVICE_TREE      "/linux/linux.img"
+#define C96_DEVICE_TREE      "/linux/chameleon96.dtb"
 #define C96_U_BOOT_SCR       "/linux/u-boot.txt"
 
 /* Extra Environment */
@@ -81,47 +75,10 @@
     	"bridge enable;"                        \
     	"mw 0x1FFFF000 0; mw 0xFFD05054 0\0"    \
     \
-    "usb_reset="                      \
-        "echo Resetting USB HUB...;"  \
-        "gpio clear 09;"              \
-        "gpio clear 0;"               \
-        "sleep 1;"                    \
-        "gpio set 22;"                \
-        "gpio set 09;"                \
-        "gpio set 0;"                 \
-        "gpio set 25\0"               \
-    \
-    "hdmi_test=" \
-        "echo Initializing HDMI Color Bar test...;" \
-        "i2c dev 2;"                  \
-        "i2c mw 37 FF.1 87 1;"        \
-        "i2c mw 73 FF.1 00 1;"        \
-        "i2c mw 73 A0.1 02 1;"        \
-        "i2c mw 73 E4.1 C0 1;"        \
-        "i2c mw 73 F0.1 00 1;"        \
-        "i2c dev 0\0"                 \
-    "hdmi_init=" \
-        "echo Initializing HDMI for 720p...;" \
-        "i2c dev 2; "                 \
-        "i2c mw 37 FF.1 02 1;"        \
-        "i2c mw 73 FF.1 00 1;"        \
-        "i2c mw 73 A0.1 02 1;"        \
-        "i2c mw 73 CB.1 00 1;"        \
-        "i2c mw 73 F0.1 00 1;"        \
-        "i2c mw 73 18.1 FF 1;"        \
-        "i2c mw 73 19.1 FF 1;"        \
-        "i2c mw 73 1A.1 FF 1;"        \
-        "i2c mw 73 20.1 45 1;"        \
-        "i2c mw 73 21.1 23 1;"        \
-        "i2c mw 73 22.1 01 1;"        \
-        "i2c mw 73 23.1 14 1;"        \
-        "i2c mw 37 23.1 20 1;"        \
-        "i2c dev 0\0 "                \
     "mmcload=" \
     	"mmc rescan;"                 \
         "run fpgacheck;"              \
         "run scrtest;"                \
-        "run hdmi_init;"              \
         "run kernel_init\0"           \
     "kernel_init=" \
         "echo Loading Kernel and Device Tree...;"     \

@@ -106,7 +106,9 @@
  */
 #ifdef CONFIG_CMD_FPGA
 #define CONFIG_FPGA
+#ifndef CONFIG_FPGA_ALTERA
 #define CONFIG_FPGA_ALTERA
+#endif
 #define CONFIG_FPGA_SOCFPGA
 #define CONFIG_FPGA_COUNT		1
 #endif
