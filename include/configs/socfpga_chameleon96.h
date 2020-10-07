@@ -74,6 +74,15 @@
         "echo Enabling FPGA to HPS bridges...;" \
     	"bridge enable;"                        \
     	"mw 0x1FFFF000 0; mw 0xFFD05054 0\0"    \
+    "usb_reset="                      \
+        "echo Resetting USB HUB...;"  \
+        "gpio clear 09;"              \
+        "gpio clear 0;"               \
+        "sleep 1;"                    \
+        "gpio set 22;"                \
+        "gpio set 09;"                \
+        "gpio set 0;"                 \
+        "gpio set 25\0"               \
     \
     "mmcload=" \
     	"mmc rescan;"                 \
