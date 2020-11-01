@@ -139,27 +139,27 @@ const u8 sys_mgr_init_table[] = {
 	1, /* GPLMUX11 */
 	1, /* GPLMUX12 */
 	1, /* GPLMUX13 */
-	1, /* GPLMUX14 */
-	1, /* GPLMUX15 */
-	1, /* GPLMUX16 */
-	1, /* GPLMUX17 */
-	1, /* GPLMUX18 */
-	1, /* GPLMUX19 */
-	1, /* GPLMUX20 */
-	1, /* GPLMUX21 */
-	1, /* GPLMUX22 */
-	1, /* GPLMUX23 */
-	1, /* GPLMUX24 */
+	0, /* GPLMUX14 */
+	0, /* GPLMUX15 */
+	0, /* GPLMUX16 */
+	0, /* GPLMUX17 */
+	0, /* GPLMUX18 */
+	0, /* GPLMUX19 */
+	0, /* GPLMUX20 */
+	0, /* GPLMUX21 */
+	0, /* GPLMUX22 */
+	0, /* GPLMUX23 */
+	0, /* GPLMUX24 */
 	1, /* GPLMUX25 */
-	1, /* GPLMUX26 */
-	1, /* GPLMUX27 */
-	1, /* GPLMUX28 */
-	1, /* GPLMUX29 */
-	1, /* GPLMUX30 */
-	1, /* GPLMUX31 */
+	0, /* GPLMUX26 */
+	0, /* GPLMUX27 */
+	0, /* GPLMUX28 */
+	0, /* GPLMUX29 */
+	0, /* GPLMUX30 */
+	0, /* GPLMUX31 */
 	1, /* GPLMUX32 */
-	1, /* GPLMUX33 */
-	1, /* GPLMUX34 */
+	0, /* GPLMUX33 */
+	0, /* GPLMUX34 */
 	1, /* GPLMUX35 */
 	1, /* GPLMUX36 */
 	1, /* GPLMUX37 */
@@ -173,25 +173,25 @@ const u8 sys_mgr_init_table[] = {
 	1, /* GPLMUX45 */
 	1, /* GPLMUX46 */
 	1, /* GPLMUX47 */
-	1, /* GPLMUX48 */
-	1, /* GPLMUX49 */
-	1, /* GPLMUX50 */
-	1, /* GPLMUX51 */
-	1, /* GPLMUX52 */
-	1, /* GPLMUX53 */
-	1, /* GPLMUX54 */
-	1, /* GPLMUX55 */
-	1, /* GPLMUX56 */
-	1, /* GPLMUX57 */
-	1, /* GPLMUX58 */
-	1, /* GPLMUX59 */
-	1, /* GPLMUX60 */
+	0, /* GPLMUX48 */
+	0, /* GPLMUX49 */
+	0, /* GPLMUX50 */
+	0, /* GPLMUX51 */
+	0, /* GPLMUX52 */
+	0, /* GPLMUX53 */
+	0, /* GPLMUX54 */
+	0, /* GPLMUX55 */
+	0, /* GPLMUX56 */
+	0, /* GPLMUX57 */
+	0, /* GPLMUX58 */
+	0, /* GPLMUX59 */
+	0, /* GPLMUX60 */
 	1, /* GPLMUX61 */
 	1, /* GPLMUX62 */
-	1, /* GPLMUX63 */
-	1, /* GPLMUX64 */
-	1, /* GPLMUX65 */
-	1, /* GPLMUX66 */
+	0, /* GPLMUX63 */
+	0, /* GPLMUX64 */
+	0, /* GPLMUX65 */
+	0, /* GPLMUX66 */
 	1, /* GPLMUX67 */
 	1, /* GPLMUX68 */
 	1, /* GPLMUX69 */
